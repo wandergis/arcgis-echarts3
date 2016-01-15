@@ -1,0 +1,37 @@
+{
+  "name": "arcgis-echarts3",
+  "version": "0.1.0",
+  "description": "A plugin for ArcGIS JS API to load echarts3 map and Make big data visualization easier.",
+  "main": "gulpfile.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wandergis/arcgis-echarts3.git"
+  },
+  "keywords": [
+    "arcgis",
+    "echarts",
+    "echarts3",
+    "visualization",
+    "map"
+  ],
+  "author": "wandergis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wandergis/arcgis-echarts3/issues"
+  },
+  "homepage": "https://github.com/wandergis/arcgis-echarts3#readme"
+}
