@@ -22,3 +22,7 @@ A plugin for ArcGIS JS API to load echarts3 map and Make big data visualization 
 ![demo1](https://raw.githubusercontent.com/wandergis/arcgis-echarts3/master/examples/demo1.gif)
 
 ![demo2](https://raw.githubusercontent.com/wandergis/arcgis-echarts3/master/examples/demo2.gif)
+
+# 参考
+
+>[https://github.com/ecomfe/echarts](https://github.com/ecomfe/echarts)
