@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>百度迁徙图ArcGIS JS API版</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+    <style>
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #FFF;
+            overflow: hidden;
+            font-family: "Trebuchet MS", sans-serif;
+        }
+
+        #forkongithub a {
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            font-family: arial, sans-serif;
+            text-align: center;
+            font-weight: bold;
+            padding: 5px 40px;
+            font-size: 1rem;
+            line-height: 2rem;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        #forkongithub a:hover {
+            background: #c11;
+            color: #fff;
+        }
+
+        #forkongithub a::before, #forkongithub a::after {
+            content: "";
+            width: 100%;
+            display: block;
+            position: absolute;
+            top: 1px;
+            left: 0;
+            height: 1px;
+            background: #fff;
+        }
+
+        #forkongithub a::after {
+            bottom: 1px;
+            top: auto;
+        }
+
+        @media screen and (min-width: 800px) {
+            #forkongithub {
+                position: fixed;
+                display: block;
+                top: 0;
+                right: 0;
+                width: 200px;
+                overflow: hidden;
+                height: 200px;
+                z-index: 9999;
+            }
+
+            #forkongithub a {
+                width: 200px;
+                position: absolute;
+                top: 60px;
+                right: -60px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+<span id="forkongithub"><a href="https://github.com/wandergis/arcgis-echarts3">Fork me on GitHub</a></span>
+<div id="map"></div>
+<script src="../dist/main.js"></script>
+<script>
+    var dojoConfig = {
+        parseOnLoad: true,
+        packages: [{
+            "name": "src",
+            "location": "/arcgis-echarts3/src"
+        }]
+    };
+</script>
+<script src="https://js.arcgis.com/3.15/"></script>
+<script>
+    var map;
+    require(["esri/map", "src/Echarts3Layer", "dojo/domReady!"], function (Map, Echarts3Layer) {
+        map = new Map("map", {
+            basemap: "dark-gray",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+            center: [122.45, 37.75], // longitude, latitude
+            zoom: 5
+        });
+        map.on('load', function () {
+            var overlay = new Echarts3Layer(map, echarts);
+            var chartsContainer = overlay.getEchartsContainer();
+            var myChart = overlay.initECharts(chartsContainer);
+    var  geoCoordMap  =   {  
+    '兰州':  [103.82,  36.07],
+    '庆阳':  [107.63,  35.73],
+    '成都':  [104.07,  30.67],
+    '广安':  [106.63,  30.47],
+    '九寨沟':  [104.23,  33.27],
+    '汉中':  [107.02,  33.07],
+    '南阳':  [112.52,  33.0],
+    '商洛':  [109.93, 33.87],
+    '安康':  [109.02, 32.68],
+    '宜昌':  [111.28,  30.7],
+    '恩施':  [109.47,  30.3],
+    '驻马店':  [114.02,  32.98],
+    '咸宁':  [114.32,  29.85],
+    '阜阳':  [115.82,  32.9],
+    '滁州':  [118.32,  32.3],
+    '黄山':  [118.33,  29.72],
+    '宿迁':  [118.28,  33.97],
+    '淮安':  [119.02,  33.62],
+    '格尔木':  [94.9,  36.42],
+    '白银':  [104.18,  36.55],
+    '玉树':  [97.02,  33.00],
+    '张掖':  [100.45,  38.93],
+    '木里':  [101.28,  27.93],
+    '榆林':  [109.73,  38.28],
+    '吉首':  [109.73,  28.32],
+    '东营':  [118.67,  37.43],
+    '景德镇':  [117.17,  29.27],
+    '恩施':  [109.47,  30.30],
+    '吕梁':  [111.13,  37.52],
+    '济南':  [116.98,  36.67],
+    '邢台':  [114.48,  37.07],
+    '信阳':  [114.07,  32.13],
+    '运城':  [110.98,  35.02],
+    '徐州':  [117.18,  34.27],
+    '十堰':  [110.78,  32.65],
+    '六安':  [116.50,  31.77],
+    '商丘':  [115.65,  34.45],
+    '嘉峪关':  [98.27,  39.8],
+    '德令哈':  [97.37,  37.37],
+    '武威':  [102.63,  37.93],
+    '昌都':  [97.18,  31.13],
+    '同仁':  [102.02,  35.52],
+    '西昌':  [102.27,  27.90],
+    '陇南':  [104.92,  33.40],
+    '银川':  [106.28,  38.47],
+    '庆阳':  [107.63,  35.73],
+    '忻州':  [112.73,  38.42],
+    '临汾':  [111.52,  36.08],
+    '铜川':  [108.93,  34.90],
+    '泸州':  [105.43,  28.87],
+    '张家界':  [110.47,  29.13],
+    '岳阳':  [113.12,  29.37],
+    '荆州':  [112.23,  30.33],
+    '长治':  [113.12,  36.2],
+    '三门峡':  [111.20,  34.78],
+    '晋城':  [112.83,  35.50],
+    '襄樊':  [112.15,  32.02],
+    '郑州':  [113.62,  34.75],
+    '安阳':  [114.38,  36.10],
+    '莱芜':  [117.67,  36.22],
+    '枣庄':  [117.32,  34.82],
+    '济宁':  [116.58,  35.42],
+    '周口':  [114.65,  33.62],
+    '驻马店':  [114.02,  32.98],
+    '淮北':  [116.80,  33.95],
+    '蚌埠':  [117.38,  32.92],
+    '武汉':  [114.30,  30.60],
+    '安庆':  [117.05,  30.53],
+    '合肥':  [117.25,  31.83],
+    '荆门':  [112.20,  31.03],
+    '芜湖':  [118.38,  31.33],
+    '巴彦淖尔':  [107.23,  40.45],
+    '张家口':  [114.88,  40.82],
+    '石嘴山':  [106.38,  39.02],
+    '天津':  [117.20,  39.12],
+    '中卫':  [105.18,  37.52],
+    '烟台':  [121.43,  37.52],
+    '二连浩特':  [111.98,  43.65],
+    '成都':  [104.07,  30.67],
+    '南京':  [118.78,  32.07],
+    '西安':  [108.93,  34.27],
+    '广元':  [105.83,  32.43],
+    '万州':  [108.40,  30.82],
+    '重庆':  [106.55,  29.57],
+    '南昌':  [115.85,  28.68],
+    '梅州':  [116.12,  24.28],
+    '衡阳':  [112.57,  26.90],
+    '茂名':  [110.92,  21.67],
+    '怀化':  [110.00,  27.57],
+    '黄山':  [118.33,  29.72],
+    '宁波':  [121.57,  26.90],
+    '九江':  [116.00,  29.70],
+    '宁德':  [119.52,  26.67],
+    '锡林浩特':  [116.07,  43.93],
+    '呼和浩特':  [111.73,  40.83],
+    '青岛':  [120.38,  36.07],
+    '绍兴':  [120.57,  30.00],
+    '北京':  [116.4,  39.90]
+};
+
+
+
+var  Edata  =   [  
+    [{
+        name:   '兰州'
+    },   {
+        name:   '庆阳',
+         value:  10
+    }],  
+    [{
+        name:   '兰州'
+    },   {
+        name:   '成都',
+         value:  10
+    }],   
+    [{
+        name:   '成都'
+    },   {
+        name:   '广安',
+         value:  10
+    }],
+    [{
+        name:   '九寨沟'
+    },   {
+        name:   '汉中',
+         value:  10
+    }]
+];
+
+
+var  Sdata  =   [  
+    [{
+        name:   '南阳'
+    },   {
+        name:   '商洛',
+         value:  10
+    }],  
+    [{
+        name:   '商洛'
+    },   {
+        name:   '安康',
+         value:  10
+    }],   
+    [{
+        name:   '安康'
+    },   {
+        name:   '宜昌',
+         value:  10
+    }],
+    [{
+        name:   '宜昌'
+    },   {
+        name:   '恩施',
+         value:  10
+    }]
+];
+
+
+var  Rdata  =   [  
+    [{
+        name:   '驻马店'
+    },   {
+        name:   '咸宁',
+         value:  10
+    }],  
+    [{
+        name:   '阜阳'
+    },   {
+        name:   '咸宁',
+         value:  10
+    }]
+];
+
+var  Idata  =   [  
+    [{
+        name:   '滁州'
+    },   {
+        name:   '黄山',
+         value:  10
+    }],  
+    [{
+        name:   '宿迁'
+    },   {
+        name:   '淮安',
+         value:  10
+    }],
+    [{
+        name:   '淮安'
+    },   {
+        name:   '宿迁',
+         value:  10
+    }]
+];
+
+var  zhongdata  =   [  
+    [{
+        name:   '格尔木'
+    },   {
+        name:   '白银',
+         value:  10
+    }],  
+    [{
+        name:   '白银'
+    },   {
+        name:   '九寨沟',
+         value:  10
+    }],
+    [{
+        name:   '格尔木'
+    },   {
+        name:   '玉树',
+         value:  10
+    }],
+    [{
+        name:   '玉树'
+    },   {
+        name:   '九寨沟',
+         value:  10
+    }],
+    [{
+        name:   '张掖'
+    },   {
+        name:   '木里',
+         value:  10
+    }]
+];
+
+var  guodata  =   [  
+    [{
+        name:   '榆林'
+    },   {
+        name:   '吉首',
+         value:  10
+    }],  
+    [{
+        name:   '榆林'
+    },   {
+        name:   '东营',
+         value:  10
+    }],
+    [{
+        name:   '东营'
+    },   {
+        name:   '景德镇',
+         value:  10
+    }],
+    [{
+        name:   '恩施'
+    },   {
+        name:   '景德镇',
+         value:  10
+    }],
+    [{
+        name:   '吕梁'
+    },   {
+        name:   '济南',
+         value:  10
+    }],
+    [{
+        name:   '邢台'
+    },   {
+        name:   '信阳',
+         value:  10
+    }],
+    [{
+        name:   '运城'
+    },   {
+        name:   '徐州',
+         value:  10
+    }],
+    [{
+        name:   '十堰'
+    },   {
+        name:   '六安',
+         value:  10
+    }],
+    [{
+        name:   '商丘'
+    },   {
+        name:   '阜阳',
+         value:  10
+    }]
+];
+
+
+var  zhudata  =   [  
+    [{
+        name:   '嘉峪关'
+    },   {
+        name:   '张掖',
+         value:  10
+    }],  
+    [{
+        name:   '德令哈'
+    },   {
+        name:   '武威',
+         value:  10
+    }],
+    [{
+        name:   '武威'
+    },   {
+        name:   '昌都',
+         value:  10
+    }],
+    [{
+        name:   '同仁'
+    },   {
+        name:   '西昌',
+         value:  10
+    }],
+    [{
+        name:   '同仁'
+    },   {
+        name:   '陇南',
+         value:  10
+    }],
+    [{
+        name:   '银川'
+    },   {
+        name:   '庆阳',
+         value:  10
+    }],
+    [{
+        name:   '银川'
+    },   {
+        name:   '忻州',
+         value:  10
+    }],
+    [{
+        name:   '忻州'
+    },   {
+        name:   '临汾',
+         value:  10
+    }],
+    [{
+        name:   '庆阳'
+    },   {
+        name:   '临汾',
+         value:  10
+    }],
+    [{
+        name:   '铜川'
+    },   {
+        name:   '泸州',
+         value:  10
+    }],
+    [{
+        name:   '铜川'
+    },   {
+        name:   '张家界',
+         value:  10
+    }],
+    [{
+        name:   '张家界'
+    },   {
+        name:   '岳阳',
+         value:  10
+    }],
+    [{
+        name:   '岳阳'
+    },   {
+        name:   '荆州',
+         value:  10
+    }]
+];
+
+var  nindata  =   [  
+    [{
+        name:   '长治'
+    },   {
+        name:   '三门峡',
+         value:  10
+    }],  
+    [{
+        name:   '晋城'
+    },   {
+        name:   '襄樊',
+         value:  10
+    }],
+    [{
+        name:   '邢台'
+    },   {
+        name:   '郑州',
+         value:  10
+    }],
+    [{
+        name:   '安阳'
+    },   {
+        name:   '莱芜',
+         value:  10
+    }],
+    [{
+        name:   '莱芜'
+    },   {
+        name:   '枣庄',
+         value:  10
+    }],
+    [{
+        name:   '济宁'
+    },   {
+        name:   '六安',
+         value:  10
+    }],
+    [{
+        name:   '六安'
+    },   {
+        name:   '阜阳',
+         value:  10
+    }],
+    [{
+        name:   '周口'
+    },   {
+        name:   '驻马店',
+         value:  10
+    }],
+    [{
+        name:   '淮北'
+    },   {
+        name:   '蚌埠',
+         value:  10
+    }],
+    [{
+        name:   '信阳'
+    },   {
+        name:   '武汉',
+         value:  10
+    }],
+    [{
+        name:   '武汉'
+    },   {
+        name:   '安庆',
+         value:  10
+    }],
+    [{
+        name:   '安庆'
+    },   {
+        name:   '合肥',
+         value:  10
+    }],
+    [{
+        name:   '襄樊'
+    },   {
+        name:   '荆门',
+         value:  10
+    }],
+    [{
+        name:   '信阳'
+    },   {
+        name:   '六安',
+         value:  10
+    }],
+    [{
+        name:   '滁州'
+    },   {
+        name:   '芜湖',
+         value:  10
+    }]
+];
+
+
+var  chundata  =   [  
+    [{
+        name:   '巴彦淖尔'
+    },   {
+        name:   '张家口',
+         value:  10
+    }],  
+    [{
+        name:   '石嘴山'
+    },   {
+        name:   '天津',
+         value:  10
+    }],
+    [{
+        name:   '中卫'
+    },   {
+        name:   '烟台',
+         value:  10
+    }],
+    [{
+        name:   '二连浩特'
+    },   {
+        name:   '成都',
+         value:  10
+    }],
+    [{
+        name:   '邢台'
+    },   {
+        name:   '南京',
+         value:  10
+    }],
+    [{
+        name:   '西安'
+    },   {
+        name:   '恩施',
+         value:  10
+    }],
+    [{
+        name:   '西安'
+    },   {
+        name:   '徐州',
+         value:  10
+    }],
+    [{
+        name:   '安康'
+    },   {
+        name:   '蚌埠',
+         value:  10
+    }],
+    [{
+        name:   '恩施'
+    },   {
+        name:   '安庆',
+         value:  10
+    }],
+    [{
+        name:   '徐州'
+    },   {
+        name:   '安庆',
+         value:  10
+    }]
+];
+
+
+var  jiedata  =   [  
+    [{
+        name:   '广元'
+    },   {
+        name:   '合肥',
+         value:  10
+    }],  
+    [{
+        name:   '西安'
+    },   {
+        name:   '万州',
+         value:  10
+    }],
+    [{
+        name:   '周口'
+    },   {
+        name:   '武汉',
+         value:  10
+    }],
+    [{
+        name:   '南昌'
+    },   {
+        name:   '梅州',
+         value:  10
+    }],
+    [{
+        name:   '梅州'
+    },   {
+        name:   '衡阳',
+         value:  10
+    }],
+    [{
+        name:   '宜昌'
+    },   {
+        name:   '茂名',
+         value:  10
+    }]
+];
+
+
+var  kuaidata  =   [  
+    [{
+        name:   '安康'
+    },   {
+        name:   '万州',
+         value:  10
+    }],  
+    [{
+        name:   '十堰'
+    },   {
+        name:   '宜昌',
+         value:  10
+    }],
+    [{
+        name:   '商洛'
+    },   {
+        name:   '怀化',
+         value:  10
+    }],
+    [{
+        name:   '信阳'
+    },   {
+        name:   '南京',
+         value:  10
+    }],
+    [{
+        name:   '南京'
+    },   {
+        name:   '黄山',
+         value:  10
+    }],
+    [{
+        name:   '荆州'
+    },   {
+        name:   '宁波',
+         value:  10
+    }],
+    [{
+        name:   '阜阳'
+    },   {
+        name:   '衡阳',
+         value:  10
+    }],
+    [{
+        name:   '九江'
+    },   {
+        name:   '宁德',
+         value:  10
+    }]
+];
+
+
+var  ledata  =   [  
+    [{
+        name:   '锡林浩特'
+    },   {
+        name:   '呼和浩特',
+         value:  10
+    }],  
+    [{
+        name:   '呼和浩特'
+    },   {
+        name:   '临汾',
+         value:  10
+    }],
+    [{
+        name:   '临汾'
+    },   {
+        name:   '青岛',
+         value:  10
+    }],
+    [{
+        name:   '北京'
+    },   {
+        name:   '南昌',
+         value:  10
+    }],
+    [{
+        name:   '南昌'
+    },   {
+        name:   '武汉',
+         value:  10
+    }],
+    [{
+        name:   '南阳'
+    },   {
+        name:   '宜昌',
+         value:  10
+    }],
+    [{
+        name:   '南京'
+    },   {
+        name:   '绍兴',
+         value:  10
+    }]
+];
+
+var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+
+var convertData = function(data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var dataItem = data[i];
+        var fromCoord = geoCoordMap[dataItem[0].name];
+        var toCoord = geoCoordMap[dataItem[1].name];
+        if (fromCoord && toCoord) {
+            res.push([{
+                coord: fromCoord
+            }, {
+                coord: toCoord
+            }]);
+        }
+    }
+    return res;
+};
+
+var color = ['#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#a6c84c', '#ffa022', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9', '#46bee9'];
+var series = [];
+[
+    ['E', Edata],
+    ['S', Sdata],
+    ['R', Rdata],
+    ['I', Idata],
+    ['中', zhongdata],
+    ['国', guodata],
+    ['祝',
+        zhudata
+    ],
+    ['您',
+        nindata
+    ],
+    ['春',
+        chundata
+    ],
+    ['节',
+        jiedata
+    ],
+    ['快',
+        kuaidata
+    ],
+    ['乐',
+        ledata
+    ]
+].forEach(function(item, i) {
+    series.push({
+        name: item[0],
+        type: 'lines',
+        zlevel: 1,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0.7,
+            color: '#fff',
+            symbolSize: 3
+        },
+        lineStyle: {
+            normal: {
+                color: color[i],
+                width: 0,
+                curveness: 0.2
+            }
+        },
+        data: convertData(item[1])
+    }, {
+        name: item[0],
+        type: 'lines',
+        zlevel: 2,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0,
+            symbol: planePath,
+            symbolSize: 15
+        },
+        lineStyle: {
+            normal: {
+                color: color[i],
+                width: 1,
+                opacity: 0.4,
+                curveness: 0.2
+            }
+        },
+        data: convertData(item[1])
+    }, {
+        name: item[0],
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        zlevel: 2,
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        label: {
+            normal: {
+                show: true,
+                position: 'right',
+                formatter: '{b}'
+            }
+        },
+        symbolSize: function(val) {
+            return val[2] / 8;
+        },
+        itemStyle: {
+            normal: {
+                color: color[i]
+            }
+        },
+        data: item[1].map(function(dataItem) {
+            return {
+                name: dataItem[1].name,
+                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+            };
+        })
+    });
+});
+
+option = {
+    // backgroundColor: '#404a59',
+    title: {
+        text: 'ESRI中国祝您春节快乐',
+        subtext: '',
+        left: 'center',
+        textStyle: {
+            color: 'red'
+        }
+    },
+    tooltip: {
+        // trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        top: 'bottom',
+        left: 'left',
+        data: ['E', 'S', 'R', 'I', '中', '国', '祝', '您', '春', '节', '快', '乐'],
+        textStyle: {
+            color: '#fff'
+        },
+        selectedMode: 'single'
+    },
+    geo: {
+        map: '',
+        label: {
+            emphasis: {
+                show: false
+            }
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#404a59'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    series: series
+};
+            // 使用刚指定的配置项和数据显示图表。
+            overlay.setOption(option);
+        });
+    });
+</script>
+</body>
+</html>
