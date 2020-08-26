@@ -1,5 +1,5 @@
 # arcgis-echarts3
-A plugin for ArcGIS JS API to load echarts3 map and Make big data visualization easier.
+A plugin for ArcGIS JS API to load Apache ECharts (incubating) 3 map and Make big data visualization easier.
 
 > 百度前几天正式推出了echarts3，给炫酷的地图可视化带来了福音，继昨天发布了leaflet加载echarts3的版本，今天发布ArcGIS JS API版本，如果你认为对你有帮助的请加star。
 
